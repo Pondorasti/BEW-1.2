@@ -29,9 +29,11 @@ class Book(db.Model):
     publish_date = db.Column(db.Date)
 
     # The author - Who wrote it?
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
+    author_id = db.Column(
+        db.Integer, db.ForeignKey('author.id'), nullable=False
+    )
     author = db.relationship('Author', back_populates='books')
-    
+
     # The audience - Who is this book written for?
     audience = db.Column(db.Enum(Audience), default=Audience.ALL)
 
@@ -78,13 +80,14 @@ class Genre(db.Model):
         return f'<Genre: {self.name}>'
 
 
-book_genre_table = db.Table('book_genre',
+book_genre_table = db.Table(
+    'book_genre',
     db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'))
 )
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
@@ -95,7 +98,8 @@ class User(db.Model):
         return f'<User: {self.username}>'
 
 
-favorite_books_table = db.Table('user_book',
+favorite_books_table = db.Table(
+    'user_book',
     db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
