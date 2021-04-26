@@ -9,6 +9,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
 
+    shopping_list_items = db.relationship(
+        "GroceryItem", secondary="shopping_lists")
+
 
 class ItemCategory(FormEnum):
     """Categories of grocery items."""
@@ -45,3 +48,12 @@ class GroceryItem(db.Model):
 
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_by = db.relationship("User")
+
+    shoppers = db.relationship("User", secondary="shopping_lists")
+
+
+shopping_list_table = db.Table(
+    "shopping_lists",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+    db.Column("item_id", db.Integer, db.ForeignKey("grocery_item.id"))
+)
