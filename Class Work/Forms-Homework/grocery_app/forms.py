@@ -54,3 +54,7 @@ class GroceryItemForm(FlaskForm):
     store = QuerySelectField("Store", validators=[
                              DataRequired()], query_factory=lambda: GroceryStore.query)
     submit = SubmitField("Submit")
+
+    def validate_name(self, name):
+        if "dragonegg" in name.data.lower().replace(" ", ""):
+            raise ValidationError("Dragon eggs are not allowed!")
