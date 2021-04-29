@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 # App Setup
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)  # <-- who this?
 
 # DB Setup
 db = SQLAlchemy(app)
@@ -28,10 +28,12 @@ def load_user(user_id):
 
 bcrypt = Bcrypt(app)
 
+# Routes Setup
+from .main.routes import main  # nopep8
+app.register_blueprint(main)
 
-@app.route("/")
-def hello_world():
-    return "Hello, Alex"
+from .auth.routes import auth  # nopep8
+app.register_blueprint(auth)
 
 
 # App Context
