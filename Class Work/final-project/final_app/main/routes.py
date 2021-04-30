@@ -33,3 +33,18 @@ def create_sprint():
         return redirect(url_for("main.homepage"))
 
     return render_template("create_sprint.html", form=form)
+
+
+@main.route("/sprint/<sprint_id>", methods=["GET", "POST"])
+@login_required
+def sprint_detail(sprint_id):
+    sprint = Sprint.query.get(sprint_id)
+    form = SprintForm(obj=sprint)
+
+    if form.validate_on_submit():
+        sprint.name = form.name.data
+        db.session.commit()
+
+        flash("Sprint succefully updated!")
+
+    return render_template("sprint_detail.html", sprint=sprint, form=form)

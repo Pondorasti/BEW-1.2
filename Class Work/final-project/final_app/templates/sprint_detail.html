@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Sprint - {{ sprint.name }}</h1>
+
+<i>Created by: {{ sprint.created_by.username }}</i>
+
+<h2>Tasks</h2>
+
+<div class="items">
+  {% for task in sprint.tasks %}
+  <div class="item-details">
+    <a href="/item/{{ item.id }}">
+      <p><strong>{{ task.title }}</strong></p>
+    </a>
+    <p>Description: ${{ task.description }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+
+<h2>Edit Sprint</h2>
+
+<form method="POST" action="{{ url_for('main.sprint_detail', sprint_id=sprint.id) }}">
+  {{ form.csrf_token }}
+  <fieldset>
+    <legend>Please enter your information:</legend>
+    {{ form.name.label }}
+    {{ form.name }}
+
+    {{ form.submit}}
+  </fieldset>
+</form>
+
+{% endblock %}
