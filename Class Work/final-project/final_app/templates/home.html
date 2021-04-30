@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Hello</h1>
+<h1>Pythonic Kanban</h1>
+<i>Plan, Organize, Accomplish like never before! The Python way!</i>
+
+{% for sprint in sprints %}
+<div class="store">
+  <a href="/sprint/{{ sprint.id }}">{{ sprint.name }}</a> - {{ sprint.tasks|length }} tasks
+</div>
+{% endfor %}
+
 {% endblock %}
