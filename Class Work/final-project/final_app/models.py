@@ -18,6 +18,9 @@ class Sprint(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_by = db.relationship("User")
 
+    def __repr__(self):
+        return self.name
+
 
 class TaskDifficulty(FormEnum):
     EASY = "Easy Peazy"
@@ -29,7 +32,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(400))
-    category = db.Column(
+    difficulty = db.Column(
         db.Enum(TaskDifficulty), default=TaskDifficulty.MEDIUM
     )
 

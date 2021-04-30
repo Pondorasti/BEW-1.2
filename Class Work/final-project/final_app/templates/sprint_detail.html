@@ -9,11 +9,10 @@
 
 <div class="items">
   {% for task in sprint.tasks %}
-  <div class="item-details">
-    <a href="/item/{{ item.id }}">
-      <p><strong>{{ task.title }}</strong></p>
-    </a>
-    <p>Description: ${{ task.description }}</p>
+  <div class="store">
+    <a href="/item/{{ task.id }}"><strong>{{ task.title }}</strong></a>
+    <br>
+    {{ task.description }}
   </div>
   {% endfor %}
 </div>

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>New Task</h1>
+
+<form method="POST" action="{{ url_for('main.create_task') }}">
+  {{ form.csrf_token }}
+  <fieldset>
+    <legend>Please enter your information:</legend>
+
+    {{ form.title.label }}
+    {{ form.title }}
+
+    <ul>
+      {% for error in form.title.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.description.label }}
+    {{ form.description }}
+
+    <ul>
+      {% for error in form.description.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.difficulty.label }}
+    {{ form.difficulty }}
+
+    <ul>
+      {% for error in form.difficulty.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.sprint.label }}
+    {{ form.sprint }}
+
+    <ul>
+      {% for error in form.sprint.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.submit }}
+  </fieldset>
+</form>
+
+
+{% endblock %}

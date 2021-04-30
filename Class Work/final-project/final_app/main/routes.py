@@ -1,10 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
-import flask_login
-
 from .. import app, db
 from ..models import Sprint, Task
-from .forms import SprintForm
+from .forms import SprintForm, TaskForm
 
 main = Blueprint("main", __name__)
 
@@ -28,7 +26,7 @@ def create_sprint():
         db.session.add(sprint)
         db.session.commit()
 
-        flash("New Sprint created!")
+        flash("New sprint created!")
 
         return redirect(url_for("main.homepage"))
 
@@ -48,3 +46,26 @@ def sprint_detail(sprint_id):
         flash("Sprint succefully updated!")
 
     return render_template("sprint_detail.html", sprint=sprint, form=form)
+
+
+@main.route("/create_task", methods=["GET", "POST"])
+@login_required
+def create_task():
+    form = TaskForm()
+
+    if form.validate_on_submit():
+        task = Task(
+            title=form.title.data,
+            description=form.description.data,
+            difficulty=form.difficulty.data,
+            sprint=form.sprint.data
+        )
+
+        db.session.add(task)
+        db.session.commit()
+
+        flash("New task created!")
+
+        return redirect(url_for("main.homepage"))
+
+    return render_template("create_task.html", form=form)
