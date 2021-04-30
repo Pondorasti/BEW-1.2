@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Task - {{ task.title }}</h1>
+<pre>{{ task.description }}</pre>
+<strong>Difficulty:</strong> {{ task.difficulty }} <br>
+<strong>Sprint:</strong> {{ task.sprint.name }} <br>
+<strong>Created by:</strong> {{ task.created_by.username }} <br>
+
+<h2>Edit Task</h2>
+
+<form method="POST" action="{{ url_for('main.task_detail', task_id=task.id) }}">
+  {{ form.csrf_token }}
+  <fieldset>
+    <legend>Please enter your information:</legend>
+
+    {{ form.title.label }}
+    {{ form.title }}
+
+    <ul>
+      {% for error in form.title.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.description.label }}
+    {{ form.description }}
+
+    <ul>
+      {% for error in form.description.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.difficulty.label }}
+    {{ form.difficulty }}
+
+    <ul>
+      {% for error in form.difficulty.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.sprint.label }}
+    {{ form.sprint }}
+
+    <ul>
+      {% for error in form.sprint.errors %}
+      <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+
+    {{ form.submit }}
+  </fieldset>
+</form>
+
+{% endblock %}

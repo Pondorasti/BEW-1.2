@@ -28,7 +28,7 @@ def create_sprint():
 
         flash("New sprint created!")
 
-        return redirect(url_for("main.homepage"))
+        return redirect(url_for("main.sprint_detail", sprint_id=sprint.id))
 
     return render_template("create_sprint.html", form=form)
 
@@ -66,6 +66,25 @@ def create_task():
 
         flash("New task created!")
 
-        return redirect(url_for("main.homepage"))
+        return redirect(url_for("main.task_detail", task_id=task.id))
 
     return render_template("create_task.html", form=form)
+
+
+@main.route("/task/<task_id>", methods=["GET", "POST"])
+@login_required
+def task_detail(task_id):
+    task = Task.query.get(task_id)
+    form = TaskForm(obj=task)
+
+    if form.validate_on_submit():
+        task.title = form.title.data
+        task.description = form.description.data
+        task.difficulty = form.difficulty.data
+        task.sprint = form.sprint.data
+
+        db.session.commit()
+
+        flash("Task succefully updated!")
+
+    return render_template("task_detail.html", task=task, form=form)
