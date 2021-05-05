@@ -112,11 +112,6 @@ class AuthTests(TestCase):
         )
 
     def test_logout(self):
-        # TODO: Write a test for the logout route. It should:
-        # - Create a user
-        # - Log the user in (make a POST request to /login)
-        # - Make a GET request to /logout
-        # - Check that the "login" button appears on the homepage
         create_user()
         self.app.post("/login", data=user_data)
 
