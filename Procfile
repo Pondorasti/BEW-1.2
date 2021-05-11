@@ -1,0 +1,1 @@
+web: gunicorn Class\ Work/final-project/run:app
