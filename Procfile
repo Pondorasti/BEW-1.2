@@ -1,1 +1,1 @@
-web: gunicorn Class\ Work/final-project/run:app
+web: gunicorn Class\ Work/final-project/app:app
