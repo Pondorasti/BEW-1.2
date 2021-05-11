@@ -1,1 +1,1 @@
-web: gunicorn Class\ Work.final-project.app:app
+web: gunicorn -w 1 Class\ Work.final-project.app:app --preload
